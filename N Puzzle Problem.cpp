@@ -6,6 +6,17 @@ class Board
     int n, g, h;
     vector<vector<int>> B;
 public:
+    Board()
+    {
+
+    }
+    Board(const Board& org)
+    {
+        n = org.n;
+        g = org.g;
+        h = org.h;
+        B = org.B;
+    }
     Board(int nn, int gg, vector<vector<int>> BB)
     {
         n = nn, g = gg;
@@ -84,11 +95,20 @@ public:
     {
         return (*this) < newBoard;
     }
+    Board& operator = (const Board& org)
+    {
+        n = org.n;
+        g = org.g;
+        h = org.h;
+        B = org.B;
+        return *this;
+    }
 };
 
 void A_Star(Board start, Board goal)
 {
     set<Board> openList, closedList;
+    map<Board, Board> par;
     openList.insert(start);
     while (openList.size()) {
         Board current = *(openList.begin());
@@ -102,12 +122,12 @@ void A_Star(Board start, Board goal)
                     if (newState < *it) {
                         openList.erase(it);
                         openList.insert(newState);
-
+                        par.insert(make_pair(newState, current));
                     }
                 }
                 else {
                     openList.insert(newState);
-//                    par.insert(make_pair(newState, current));
+                    par.insert(make_pair(newState, current));
                 }
             }
         }
@@ -117,10 +137,10 @@ void A_Star(Board start, Board goal)
         ans.push_back(goal);
         if (goal == start)
             break;
-        else {
+        else
             goal = par[goal];
-        }
     }
+    reverse(ans.begin(), ans.end());
 }
 
 int main()
