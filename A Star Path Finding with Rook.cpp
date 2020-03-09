@@ -224,7 +224,7 @@ void aStarSearch(vector<vector<int>> grid, Pair src, Pair dest)
 					cellDetails[i-step][j].parent_j = j;
 				}
 			}
-			else {
+			else if (!isUnBlocked(grid, i - step, j)) {
                 break;
 			}
 		}
@@ -254,7 +254,7 @@ void aStarSearch(vector<vector<int>> grid, Pair src, Pair dest)
 					cellDetails[i+step][j].parent_j = j;
 				}
 			}
-			else {
+			else if (!isUnBlocked(grid, i + step, j)) {
                 break;
 			}
 		}
@@ -284,7 +284,7 @@ void aStarSearch(vector<vector<int>> grid, Pair src, Pair dest)
 					cellDetails[i][j+step].parent_j = j;
 				}
 			}
-			else {
+			else if (!isUnBlocked(grid, i, j + step)) {
                 break;
 			}
 		}
@@ -314,7 +314,7 @@ void aStarSearch(vector<vector<int>> grid, Pair src, Pair dest)
 					cellDetails[i][j-step].parent_j = j;
 				}
 			}
-			else {
+			else if (!isUnBlocked(grid, i, j - step)) {
                 break;
 			}
 		}
